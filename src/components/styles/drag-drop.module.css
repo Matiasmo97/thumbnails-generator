@@ -10,7 +10,14 @@
   display: flex;
   width: 660px;
   min-height: 410px;
+  max-height: 560px;
   border-radius: 3px;
+}
+.button_back {
+  margin: 1rem 0 0 1rem;
+}
+.link {
+  text-decoration: none;
 }
 .container_dropZone button{
   font-size: 12px;
@@ -134,7 +141,8 @@
     height: 620px;
   }
   .container_dropZone img {
-    width: 150px;
+    width: 160px;
+    max-height: 180px;
   }
   .dropzone {
     width: 250px;

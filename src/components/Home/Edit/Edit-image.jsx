@@ -10,11 +10,11 @@ import { Box } from "@mui/system";
 import React, { useState } from "react";
 import Cropper from "react-easy-crop";
 import getCroppedImg from "../../utils/utils";
-import styles from "../../styles/dropzone.module.css";
-
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 function Edit({ image, setDrop, setImage }) {
+  const { isAuthenticated } = useAuth0();
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
@@ -26,93 +26,91 @@ function Edit({ image, setDrop, setImage }) {
 
   const cropImage = async () => {
     try {
-      const { url } = await getCroppedImg(
-        image,
-        croppedAreaPixels,
-        rotation
-      );
+      const { url } = await getCroppedImg(image, croppedAreaPixels, rotation);
       setImage(url);
     } catch (error) {
       console.log(error);
     }
   };
   return (
-    <div >
-      <DialogContent
-        dividers
-        sx={{
-          background: "#333",
-          position: "relative",
-          height: 400,
-          width: "auto",
-          minWidth: { sm: 500 },
-        }}
-      >
-        <Cropper
-          image={image}
-          crop={crop}
-          zoom={zoom}
-          rotation={rotation}
-          aspect={1}
-          onZoomChange={setZoom}
-          onRotationChange={setRotation}
-          onCropChange={setCrop}
-          onCropComplete={cropComplete}
-        />
-      </DialogContent>
-      <DialogActions
-        sx={{
-          flexDirection: "column",
-          mx: 2,
-          my: 2,
-        }}
-      >
-        <Box
+    isAuthenticated && (
+      <div>
+        <DialogContent
+          dividers
           sx={{
-            width: "100%",
-            mb: 1,
+            background: "#333",
+            position: "relative",
+            height: 400,
+            width: "auto",
+            minWidth: { sm: 500 },
           }}
         >
-          <Box>
-            <Typography>Zoom: {zoomPercent(zoom)}</Typography>
-            <Slider
-              valueLabelDisplay="auto"
-              valueLabelFormat={zoomPercent}
-              min={1}
-              max={3}
-              step={0.1}
-              value={zoom}
-              onChange={(e, zoom) => setZoom(zoom)}
-            />
-          </Box>
-          <Box>
-            <Typography>Rotation: {rotation}</Typography>
-            <Slider
-              valueLabelDisplay="auto"
-              min={0}
-              max={360}
-              value={rotation}
-              onChange={(e, rotation) => setRotation(rotation)}
-            />
-          </Box>
-        </Box>
-        <Box
+          <Cropper
+            image={image}
+            crop={crop}
+            zoom={zoom}
+            rotation={rotation}
+            aspect={1}
+            onZoomChange={setZoom}
+            onRotationChange={setRotation}
+            onCropChange={setCrop}
+            onCropComplete={cropComplete}
+          />
+        </DialogContent>
+        <DialogActions
           sx={{
-            display: "flex",
-            gap: 2,
-            flexWrap: "wrap",
+            flexDirection: "column",
+            mx: 2,
+            my: 2,
           }}
         >
-          <Button
-            variant="contained"
-            startIcon={<CropIcon />}
-            onClick={cropImage}
+          <Box
+            sx={{
+              width: "100%",
+              mb: 1,
+            }}
           >
-            Crop
-          </Button>
-        </Box>
-      </DialogActions>
-    </div>
+            <Box>
+              <Typography>Zoom: {zoomPercent(zoom)}</Typography>
+              <Slider
+                valueLabelDisplay="auto"
+                valueLabelFormat={zoomPercent}
+                min={1}
+                max={3}
+                step={0.1}
+                value={zoom}
+                onChange={(e, zoom) => setZoom(zoom)}
+              />
+            </Box>
+            <Box>
+              <Typography>Rotation: {rotation}</Typography>
+              <Slider
+                valueLabelDisplay="auto"
+                min={0}
+                max={360}
+                value={rotation}
+                onChange={(e, rotation) => setRotation(rotation)}
+              />
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 2,
+              flexWrap: "wrap",
+            }}
+          >
+            <Button
+              variant="contained"
+              startIcon={<CropIcon />}
+              onClick={cropImage}
+            >
+              Crop
+            </Button>
+          </Box>
+        </DialogActions>
+      </div>
+    )
   );
 }
 
