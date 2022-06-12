@@ -1,4 +1,3 @@
-import { Cancel } from "@mui/icons-material";
 import CropIcon from "@mui/icons-material/Crop";
 import {
   Button,
@@ -10,9 +9,12 @@ import {
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import Cropper from "react-easy-crop";
-import js from "../../../img/JavaScript.png"
+import getCroppedImg from "../../utils/utils";
+import styles from "../../styles/dropzone.module.css";
 
-function Edit({ thumbnail, setDrop }) {
+
+
+function Edit({ image, setDrop, setImage }) {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
@@ -22,10 +24,20 @@ function Edit({ thumbnail, setDrop }) {
     setCroppedAreaPixels(croppedAreaPixels);
   };
 
-
-  const cropImage = async () => {};
+  const cropImage = async () => {
+    try {
+      const { url } = await getCroppedImg(
+        image,
+        croppedAreaPixels,
+        rotation
+      );
+      setImage(url);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <>
+    <div >
       <DialogContent
         dividers
         sx={{
@@ -37,7 +49,7 @@ function Edit({ thumbnail, setDrop }) {
         }}
       >
         <Cropper
-          image={js}
+          image={image}
           crop={crop}
           zoom={zoom}
           rotation={rotation}
@@ -92,13 +104,6 @@ function Edit({ thumbnail, setDrop }) {
           }}
         >
           <Button
-            variant="outlined"
-            startIcon={<Cancel />}
-            onClick={() => setDrop(false)}
-          >
-            Cancel
-          </Button>
-          <Button
             variant="contained"
             startIcon={<CropIcon />}
             onClick={cropImage}
@@ -107,7 +112,7 @@ function Edit({ thumbnail, setDrop }) {
           </Button>
         </Box>
       </DialogActions>
-    </>
+    </div>
   );
 }
 
