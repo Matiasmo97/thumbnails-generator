@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-In order to run the application locally, after having done ### `npm install` you must go to the "index.js" file inside the src folder and make the following change
+In order to run the application locally, after having done `npm install` you must go to the "index.js" file inside the src folder and make the following change
 
 ##You must replace
 redirectUri="https://thumbnails-generator.vercel.app/home"
