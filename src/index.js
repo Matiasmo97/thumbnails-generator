@@ -15,8 +15,7 @@ root.render(
     <Auth0Provider
       domain="dev-bb-qyd2q.us.auth0.com"
       clientId="Py6lVhecBNt7x2owrTy2rjAgVv8uN5qw"
-      redirectUri="http://localhost:3000/home"
-      // redirectUri="https://thumbnails-generator.vercel.app/home"
+      redirectUri="https://thumbnails-generator.vercel.app/home"
     >
       <BrowserRouter>
         <App />
