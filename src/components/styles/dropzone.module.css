@@ -6,6 +6,7 @@
 }
 .button_back button {
   margin: 1rem 0rem 0 1rem;
+  box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.368);
 }
 .link {
   text-decoration: none;
