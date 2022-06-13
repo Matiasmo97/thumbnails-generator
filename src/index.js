@@ -6,13 +6,17 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 
+
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <React.StrictMode>
     <Auth0Provider
       domain="dev-bb-qyd2q.us.auth0.com"
       clientId="Py6lVhecBNt7x2owrTy2rjAgVv8uN5qw"
-      redirectUri="https://thumbnails-generator.vercel.app/home"
+      redirectUri="http://localhost:3000/home"
+      // redirectUri="https://thumbnails-generator.vercel.app/home"
     >
       <BrowserRouter>
         <App />
