@@ -13,7 +13,7 @@ import getCroppedImg from "../../utils/utils";
 import { useAuth0 } from "@auth0/auth0-react";
 
 
-function Edit({ image, setDrop, setImage }) {
+function Edit({ image, setImage }) {
   const { isAuthenticated } = useAuth0();
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -28,6 +28,8 @@ function Edit({ image, setDrop, setImage }) {
     try {
       const { url } = await getCroppedImg(image, croppedAreaPixels, rotation);
       setImage(url);
+      setZoom(1);
+      setRotation(0);
     } catch (error) {
       console.log(error);
     }
